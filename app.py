@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for
 import openai
 import os
+from flask import Flask, render_template, request
 
-# Load the OpenAI API key from environment variables
+# Set the OpenAI API key from environment variables
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 app = Flask(__name__)
@@ -29,36 +29,34 @@ def analyze():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(filepath)
 
-        # Generate a prompt for ChatGPT based on the uploaded image context
+        # Generate a prompt for quality control analysis
         prompt = chatgpt_analysis_prompt(filepath)
         
-        # Get the ChatGPT response
+        # Get the response using Completion API
         analysis_result = call_chatgpt_api(prompt)
 
         return render_template('index.html', filepath=filepath, result=analysis_result)
 
-def chatgpt_analysis_prompt(image_description):
+def chatgpt_analysis_prompt(filepath):
+    # Simple, effective prompt for quality control analysis
     prompt = (
-        f"Analyze the following image based on quality control standards: {image_description}. "
-        "Focus on clarity, color accuracy, sharpness, resolution, alignment, and any visible defects. "
-        "Provide a brief summary of any issues or areas for improvement."
+        "Analyze the uploaded image for quality control purposes. "
+        "Evaluate clarity, color accuracy, sharpness, resolution, alignment, "
+        "and any visible defects. Summarize any quality issues or areas for improvement."
     )
     return prompt
 
-
 def call_chatgpt_api(prompt):
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "You are an AI specialized in quality control and image analysis."},
-                {"role": "user", "content": prompt}
-            ]
+        response = openai.Completion.create(
+            model="gpt-4.0-mini",  # Assuming gpt-4.0-mini is supported with Completion
+            prompt=prompt,
+            max_tokens=150,  # Adjust to control response length
+            temperature=0.5   # Set to a balanced level for consistency
         )
-        return response.choices[0].message['content']
+        return response.choices[0].text.strip()
     except Exception as e:
         return f"Error in analysis: {str(e)}"
-
 
 if __name__ == '__main__':
     app.run(debug=True)
