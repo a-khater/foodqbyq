@@ -2,12 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for
 import openai
 import os
 
+# Load the OpenAI API key from environment variables
+openai.api_key = os.getenv('OPENAI_API_KEY')
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limit file size to 16MB
-
-# Set your OpenAI API key here
-openai.api_key = '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'
 
 # Create the upload folder if it doesn't exist
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
