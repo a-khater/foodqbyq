@@ -1,3 +1,4 @@
+
 import openai
 import os
 from flask import Flask, render_template, request, redirect, url_for
@@ -19,12 +20,12 @@ def index():
 @app.route('/analyze', methods=['POST'])
 def analyze():
     if 'file' not in request.files:
-        return "No file part"
+        return render_template('index.html', error="No file part")
     
     file = request.files['file']
     if file.filename == '':
-        return "No selected file"
-    
+        return render_template('index.html', error="No file selected")
+
     if file:
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(filepath)
@@ -33,9 +34,12 @@ def analyze():
         prompt = chatgpt_analysis_prompt(filepath)
         
         # Get the response using Completion API
-        analysis_result = call_chatgpt_api(prompt)
-
-        return render_template('index.html', filepath=filepath, result=analysis_result)
+        try:
+            analysis_result = call_chatgpt_api(prompt)
+            return render_template('index.html', filepath=filepath, result=analysis_result)
+        except Exception as e:
+            # Display any errors that occur during analysis
+            return render_template('index.html', filepath=filepath, error=f"Error in analysis: {str(e)}")
 
 def chatgpt_analysis_prompt(filepath):
     # Simple, effective prompt for quality control analysis
@@ -60,3 +64,4 @@ def call_chatgpt_api(prompt):
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
