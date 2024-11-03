@@ -37,11 +37,11 @@ def analyze():
 
         return render_template('index.html', filepath=filepath, result=analysis_result)
 
-def chatgpt_analysis_prompt(filepath):
+def chatgpt_analysis_prompt(image_description):
     prompt = (
-        "Evaluate the uploaded image for quality control. Focus on clarity, color accuracy, sharpness, resolution, "
-        "alignment, and any visible defects (e.g., scratches, blurs). Provide a brief summary of any issues or "
-        "areas for improvement."
+        f"Analyze the following image based on quality control standards: {image_description}. "
+        "Focus on clarity, color accuracy, sharpness, resolution, alignment, and any visible defects. "
+        "Provide a brief summary of any issues or areas for improvement."
     )
     return prompt
 
@@ -49,15 +49,16 @@ def chatgpt_analysis_prompt(filepath):
 def call_chatgpt_api(prompt):
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "You are an AI specialized in image analysis and interpretation."},
+                {"role": "system", "content": "You are an AI specialized in quality control and image analysis."},
                 {"role": "user", "content": prompt}
             ]
         )
         return response.choices[0].message['content']
     except Exception as e:
         return f"Error in analysis: {str(e)}"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
