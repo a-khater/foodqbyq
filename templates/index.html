@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Analysis App</title>
+</head>
+<body>
+    <h1>Upload an Image for Analysis</h1>
+    <form action="/analyze" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required>
+        <button type="submit">Analyze Image</button>
+    </form>
+    
+    {% if filepath %}
+    <h2>Uploaded Image:</h2>
+    <img src="{{ url_for('static', filename='uploads/' + filepath.split('/')[-1]) }}" alt="Uploaded Image" width="300">
+    
+    <h3>Analysis Result:</h3>
+    <p>{{ result }}</p>
+    {% endif %}
+</body>
+</html>
