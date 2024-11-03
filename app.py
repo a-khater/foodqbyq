@@ -1,15 +1,15 @@
 import openai
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
-# Set the OpenAI API key from environment variables
+# Set up the OpenAI API key from environment variables
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/uploads/'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limit file size to 16MB
 
-# Create the upload folder if it doesn't exist
+# Ensure the upload folder exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 @app.route('/')
@@ -49,10 +49,10 @@ def chatgpt_analysis_prompt(filepath):
 def call_chatgpt_api(prompt):
     try:
         response = openai.Completion.create(
-            model="gpt-4.0-mini",  # Assuming gpt-4.0-mini is supported with Completion
+            model="text-davinci-003",  # Adjust if "gpt-4.0-mini" becomes available
             prompt=prompt,
-            max_tokens=150,  # Adjust to control response length
-            temperature=0.5   # Set to a balanced level for consistency
+            max_tokens=150,  # Control response length
+            temperature=0.5   # Balanced for consistency
         )
         return response.choices[0].text.strip()
     except Exception as e:

@@ -6,8 +6,8 @@
 }
 
 body {
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: #fff;
+    background-color: #000;  /* Black background */
+    color: #f0c674; /* Gold color for text */
 }
 
 .navbar {
@@ -15,7 +15,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.9);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -23,7 +23,7 @@ body {
 
 .logo {
     font-size: 24px;
-    color: #00e5ff;
+    color: #f0c674;  /* Gold color */
     font-weight: bold;
 }
 
@@ -34,13 +34,13 @@ body {
 }
 
 .nav-links a {
-    color: #fff;
+    color: #f0c674; /* Gold color for links */
     text-decoration: none;
     transition: color 0.3s;
 }
 
 .nav-links a:hover {
-    color: #00e5ff;
+    color: #ffd700; /* Lighter gold on hover */
 }
 
 .hero {
@@ -49,12 +49,13 @@ body {
     align-items: center;
     text-align: center;
     padding: 100px 20px;
-    background: url('static/images/futuristic-bg.jpg') center/cover no-repeat;
+    background: url('static/images/black-gold-bg.jpg') center/cover no-repeat;
+    color: #f0c674; /* Gold text color */
 }
 
 .hero h1 {
     font-size: 3rem;
-    color: #00e5ff;
+    color: #ffd700; /* Lighter gold for main heading */
 }
 
 .upload-form {
@@ -62,8 +63,8 @@ body {
 }
 
 .file-label, .analyze-btn {
-    background: #00e5ff;
-    color: #000;
+    background: #f0c674;  /* Gold color for buttons */
+    color: #000;  /* Black text on buttons */
     padding: 12px 20px;
     border-radius: 5px;
     border: none;
@@ -73,7 +74,7 @@ body {
 }
 
 .file-label:hover, .analyze-btn:hover {
-    background: #00b3cc;
+    background: #ffd700; /* Lighter gold on hover */
 }
 
 .section {
@@ -84,7 +85,7 @@ body {
 .section h2 {
     font-size: 2.5rem;
     margin-bottom: 20px;
-    color: #00e5ff;
+    color: #f0c674;  /* Gold section titles */
 }
 
 .features-container {
@@ -95,10 +96,11 @@ body {
 }
 
 .feature {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 215, 0, 0.1);  /* Very light transparent gold background */
     padding: 20px;
     border-radius: 8px;
     width: 30%;
+    color: #f0c674; /* Gold text for feature descriptions */
 }
 
 .contact-form input, .contact-form textarea, .contact-form button {
@@ -108,10 +110,25 @@ body {
     padding: 10px;
     border-radius: 5px;
     border: none;
+    background: #000;
+    color: #f0c674;
+}
+
+.contact-form button {
+    background: #f0c674;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.contact-form button:hover {
+    background: #ffd700;
 }
 
 footer {
     text-align: center;
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.9);
+    color: #f0c674;
 }
