@@ -38,13 +38,13 @@ def analyze():
         return render_template('index.html', filepath=filepath, result=analysis_result)
 
 def chatgpt_analysis_prompt(filepath):
-    # Here you could include details about the image if needed
-    # Currently, this is a generic prompt for demonstration
     prompt = (
-        "Please analyze the uploaded image and provide insights or interpretations "
-        "based on a general visual context. Note: This is a text-based analysis request."
+        "Evaluate the uploaded image for quality control. Focus on clarity, color accuracy, sharpness, resolution, "
+        "alignment, and any visible defects (e.g., scratches, blurs). Provide a brief summary of any issues or "
+        "areas for improvement."
     )
     return prompt
+
 
 def call_chatgpt_api(prompt):
     try:
