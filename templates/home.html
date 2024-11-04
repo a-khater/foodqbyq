@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q - Food Safety Monitor</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #analysisProgress { display: none; }
+        #resultsSection { display: none; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="text-center py-4">
+        <h1><img src="{{ url_for('static', filename='logo.png') }}" alt="Q Logo" height="50"> Q - Food Safety Monitor</h1>
+    </header>
+
+    <!-- Instructions -->
+    <div class="container">
+        <p class="text-muted">Upload a clear photo in JPEG or PNG format. Max size: 5MB.</p>
+
+        <!-- Upload and Analyze Form -->
+        <form id="uploadForm" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="file" class="form-control-file" id="photoInput" name="photo" required>
+            </div>
+            <button type="button" id="analyzeButton" class="btn btn-primary" disabled onclick="startAnalysis()">Analyze</button>
+        </form>
+
+        <!-- Progress Indicator -->
+        <div id="analysisProgress" class="mt-4">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Analyzing...</span>
+            </div>
+            <p>Analyzing photo, please wait...</p>
+        </div>
+
+        <!-- Display Results -->
+        <div id="resultsSection" class="mt-4">
+            {% if results %}
+                <h2>Compliance Status: {{ results.status }}</h2>
+                <p>{{ results.summary }}</p>
+                <a href="#" class="btn btn-secondary">View Full Report</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 mt-5">
+        <a href="#">Help</a> | <a href="#">Contact Support</a> | <a href="#">Privacy Policy</a>
+    </footer>
+
+    <!-- JavaScript for UI interactions -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        const photoInput = document.getElementById('photoInput');
+        const analyzeButton = document.getElementById('analyzeButton');
+        const analysisProgress = document.getElementById('analysisProgress');
+        const resultsSection = document.getElementById('resultsSection');
+
+        // Enable analyze button after file selection
+        photoInput.addEventListener('change', () => {
+            analyzeButton.disabled = !photoInput.files.length;
+        });
+
+        function startAnalysis() {
+            analysisProgress.style.display = 'block';
+            resultsSection.style.display = 'none';
+            document.getElementById('uploadForm').submit();
+        }
+    </script>
+</body>
+</html>
